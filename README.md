@@ -2,7 +2,7 @@
 Python library for downloading files by URL's. Fast and easy. Uses only Python STDLIB.<br>
 
 Installation:
-Install PyLoader and move it to your project directory.
+Install PyLoader (zip), unpack ```pyloader``` (folder) and move it to your project directory.
 
 ## Examples.
 ### Simple download.
