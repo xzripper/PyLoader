@@ -2,7 +2,7 @@
 Python library for downloading files by URL's. Fast and easy. Uses only Python STDLIB.<br>
 
 Installation:
-```pip install pydloader```
+```pip install py_loader```
 
 ## Examples.
 ### Simple download.
