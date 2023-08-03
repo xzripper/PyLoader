@@ -90,9 +90,10 @@ PyLoader.CHUNK = 1024
 ```PyLoader.CHUNK```: PyLoader default download chunk.
 
 ```PyLoader.download```: The "simple" download. Downloads file from URL into {out}. Already handles exceptions: HTTPError, URLError, SSLCertVerificationError, ValueError.<br>
-```PyLoader.pdownload```: Download file with ability to track things like: already downloaded percentage, downloaded bytes, file size, etc.<br><br>Yields ('yield [value]' in Python) dict with these values:<br>percentage (downloaded percentage),<br>current_progress (current progress - downloaded bytes),<br>size_written (bytes was written in this chunk loading),<br>size (size of file),<br>totalbytes (size of file in bytes),<br>chunk (chunk),<br>time_wasted (wasted time to load chunk in nanoseconds),<br>success (is chunk loaded successfully).
+```PyLoader.pdownload```: Download file with ability to track things like: already downloaded percentage, downloaded bytes, file size, etc.<br><br>Yields ('yield [value]' in Python) dict with these values:<br>percentage (downloaded percentage),<br>current_progress (current progress - downloaded bytes),<br>size_written (bytes was written in this chunk loading),<br>size (size of file),<br>totalbytes (size of file in bytes),<br>chunk (chunk),<br>time_wasted (wasted time to load chunk in nanoseconds),<br>success (is chunk loaded successfully).<br><br>
+Also handles exceptions: HTTPError, RequestHTTPError, RequestConnectionError, MissingSchema, (SSLError?).
 
-```PyLoader.util_format```: Format download information. Converts dictionary with information to string.
+```PyLoader.util_format```: Format download information. Converts dictionary with information to string. If ```download_info``` (first argument) is bool, function will return the same bool.
 
 ```PyLoader.update_chunk```: Update default PyLoader chunk.
 
