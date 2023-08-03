@@ -1,5 +1,5 @@
 # PyLoader.
-Python library for downloading files by URL's easily.
+Python library for downloading files by URL's. Fast and easy. Uses only Python STDLIB.
 
 ## Examples.
 ### Simple download.
