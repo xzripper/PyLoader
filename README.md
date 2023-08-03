@@ -1,5 +1,8 @@
 # PyLoader. <img src="https://img.shields.io/badge/PyLoader-black?style=flat-square&logo=python">
-Python library for downloading files by URL's. Fast and easy. Uses only Python STDLIB.
+Python library for downloading files by URL's. Fast and easy. Uses only Python STDLIB.<br>
+
+Installation:
+```pip install pyloader```
 
 ## Examples.
 ### Simple download.
