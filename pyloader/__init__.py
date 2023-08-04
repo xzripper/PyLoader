@@ -13,7 +13,7 @@ from time import perf_counter_ns
 from typing import Union
 
 
-VERSION = 1.0
+VERSION = 1.1
 
 def _percentage(current: int, maximal: int, _round: bool=False) -> int: return round((current / maximal) * 100) if _round else float(f'{((current / maximal) * 100):.1f}')
 
@@ -104,13 +104,13 @@ class PyLoader:
                     'totalbytes': total,
                     'chunk': PyLoader.CHUNK,
                     'time_wasted': f'{perf_counter_ns() - t_start}ns',
-                    'success': True # XXX
+                    'success': True # XXX.
                 }
 
     @staticmethod
     def util_format(download_info: Union[bool, dict]) -> Union[bool, str]:
         """Utility for formating download information."""
-        return download_info if isinstance(download_info, bool) else f'{download_info["percentage"]}/100% ({download_info["current_progress"]}/{download_info["totalbytes"]}b) [+{download_info["size_written"]} ({_convsize(download_info["size_written"], PyLoader.CHUNK)})] {_convsize(download_info["current_progress"], PyLoader.CHUNK)}/{download_info["size"]} C{download_info["chunk"]} {"S+" if download_info["success"] else "F-"} | {download_info["time_wasted"]}.'
+        return download_info if isinstance(download_info, bool) else f'{download_info["percentage"]}/100% ({download_info["current_progress"]}/{download_info["totalbytes"]}b) [+{download_info["size_written"]} ({_convsize(download_info["size_written"])})] {_convsize(download_info["current_progress"], PyLoader.CHUNK)}/{download_info["size"]} C{download_info["chunk"]} {"S+" if download_info["success"] else "F-"} | {download_info["time_wasted"]}.'
 
     # @staticmethod
     # def is_success(out: Union[bool, GeneratorType]) -> bool:
