@@ -106,4 +106,4 @@ You also can use PyLoader static functions like _percentage, for your goals. The
 Report any errors to project issues.
 
 <hr>
-<p align="center">PyLoader MIT License v1.0.</p>
+<p align="center">PyLoader MIT License v1.1.</p>
