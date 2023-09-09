@@ -80,6 +80,8 @@ PyLoader.CHUNK = 1024
 @staticmethod PyLoader.download(url: str, out: str) -> bool
 @staticmethod PyLoader.pdownload(url: str, out: str, round_progress: bool=False) -> dict
 
+@staticmethod webfile(url: str, _type: str) -> str
+
 @staticmethod PyLoader.util_format(download_info: Union[bool, dict]) -> Union[bool, str]
 
 @staticmethod PyLoader.update_chunk(new_chunk: int) -> None
@@ -87,14 +89,15 @@ PyLoader.CHUNK = 1024
 
 ```VERSION```: Version of PyLoader.
 
-```_percentage```: Calculate percentage. (_percentage:47, 100, True) -> 10%.
+```_percentage```: Calculate percentage. (_percentage:47, 100, True) -> 10%.<br>
 ```_convsize```: Converting bytes into another file sizes. (_convsize:1024) -> 1.0kb.
 
 ```PyLoader.CHUNK```: PyLoader default download chunk.
 
 ```PyLoader.download```: The "simple" download. Downloads file from URL into {out}. Already handles exceptions: HTTPError, URLError, SSLCertVerificationError, ValueError.<br>
 ```PyLoader.pdownload```: Download file with ability to track things like: already downloaded percentage, downloaded bytes, file size, etc.<br><br>Yields ('yield [value]' in Python) dict with these values:<br>percentage (downloaded percentage),<br>current_progress (current progress - downloaded bytes),<br>size_written (bytes was written in this chunk loading),<br>size (size of file),<br>totalbytes (size of file in bytes),<br>chunk (chunk),<br>time_wasted (wasted time to load chunk in nanoseconds),<br>success (is chunk loaded successfully).<br><br>
-Also handles exceptions: HTTPError, RequestHTTPError, RequestConnectionError, MissingSchema, (SSLError?).
+Also handles exceptions: HTTPError, RequestHTTPError, RequestConnectionError, MissingSchema, (SSLError?).<br>
+```PyLoader.webfile```: Downloads file from URL and places downloaded into system temporary folder. Returns path to downloaded file.
 
 ```PyLoader.util_format```: Format download information. Converts dictionary with information to string. If ```download_info``` (first argument) is bool, function will return the same bool.
 
@@ -106,4 +109,4 @@ You also can use PyLoader static functions like _percentage, for your goals. The
 Report any errors to project issues.
 
 <hr>
-<p align="center">PyLoader MIT License v1.1.</p>
+<p align="center">PyLoader MIT License v1.2.</p>
