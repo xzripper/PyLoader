@@ -12,8 +12,12 @@ from time import perf_counter_ns
 
 from typing import Union
 
+from tempfile import gettempdir
 
-VERSION = 1.1
+from uuid import uuid4
+
+
+VERSION = 1.2
 
 def _percentage(current: int, maximal: int, _round: bool=False) -> int: return round((current / maximal) * 100) if _round else float(f'{((current / maximal) * 100):.1f}')
 
@@ -106,6 +110,15 @@ class PyLoader:
                     'time_wasted': f'{perf_counter_ns() - t_start}ns',
                     'success': True # XXX.
                 }
+
+    @staticmethod
+    def webfile(url: str, _type: str) -> str:
+        """Download web file buy URL and get path to downloaded web file."""
+        path = f'{gettempdir()}\\{uuid4()}.{_type}'
+
+        PyLoader.download(url, path)
+
+        return path
 
     @staticmethod
     def util_format(download_info: Union[bool, dict]) -> Union[bool, str]:
