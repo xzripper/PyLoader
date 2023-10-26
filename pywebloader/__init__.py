@@ -1,3 +1,5 @@
+"""PyLoader."""
+
 from requests import get
 from requests.exceptions import HTTPError as RequestHTTPError, ConnectionError as RequestConnectionError, MissingSchema, SSLError
 
@@ -14,10 +16,16 @@ from typing import Union
 
 from tempfile import gettempdir
 
+from os import remove
+
+from os.path import abspath
+
 from uuid import uuid4
 
 
-VERSION = 1.2
+VERSION = 1.3
+
+LOADING_GIF = abspath('pyloader\\media\\loading.gif')
 
 def _percentage(current: int, maximal: int, _round: bool=False) -> int: return round((current / maximal) * 100) if _round else float(f'{((current / maximal) * 100):.1f}')
 
@@ -25,7 +33,11 @@ def _percentage(current: int, maximal: int, _round: bool=False) -> int: return r
 def _convsize(_bytes: int, chunk: int=1024) -> str: return '0b' if _bytes == 0 else '%s%s' % (round(_bytes / pow(chunk, int(floor(log(_bytes, chunk)))), 2), ('b', 'kb', 'mb', 'gb')[int(floor(log(_bytes, chunk)))])
 
 class PyLoader:
+    """PyLoader Class."""
+
     CHUNK = 1024
+
+    temp_files: list[str] = []
 
     @staticmethod
     def download(url: str, out: str) -> bool:
@@ -112,29 +124,35 @@ class PyLoader:
                 }
 
     @staticmethod
-    def webfile(url: str, _type: str) -> str:
+    def webfile(url: str, _type: str) -> tuple[str, bool]:
         """Download web file buy URL and get path to downloaded web file."""
         path = f'{gettempdir()}\\{uuid4()}.{_type}'
 
-        PyLoader.download(url, path)
+        downloaded = PyLoader.download(url, path)
 
-        return path
+        PyLoader.temp_files.append(path)
+
+        return (path, downloaded)
+
+    @staticmethod
+    def clear_temp_files() -> bool:
+        """Clear temporary files created by `webfile`."""
+        for temp_file in PyLoader.temp_files:
+            try:
+                remove(temp_file)
+
+                PyLoader.temp_files.remove(temp_file)
+
+                return True
+            except:
+                warn(f'Failed to remove temporary file: "{temp_file}".', stacklevel=2)
+
+                return False
 
     @staticmethod
     def util_format(download_info: Union[bool, dict]) -> Union[bool, str]:
         """Utility for formating download information."""
         return download_info if isinstance(download_info, bool) else f'{download_info["percentage"]}/100% ({download_info["current_progress"]}/{download_info["totalbytes"]}b) [+{download_info["size_written"]} ({_convsize(download_info["size_written"])})] {_convsize(download_info["current_progress"], PyLoader.CHUNK)}/{download_info["size"]} C{download_info["chunk"]} {"S+" if download_info["success"] else "F-"} | {download_info["time_wasted"]}.'
-
-    # @staticmethod
-    # def is_success(out: Union[bool, GeneratorType]) -> bool:
-    #     """Checks is [out] is success. If [out] is generator, checks is True or False in generator and returns it."""
-    #     if isinstance(out, bool):
-    #         return out
-
-    #     elif isinstance(out, GeneratorType):
-    #         if True in list(out): return True
-    #         elif False in list(out): return False
-    #         else: return False
 
     @staticmethod
     def update_chunk(new_chunk: int) -> None:
